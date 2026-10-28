@@ -1,8 +1,9 @@
 import numpy as np
 from numpy.polynomial import hermite
+from numerical import *
 
 class QuantumSystem:
-    def __init__(self, mass, hbar, L, points=1000):
+    def __init__(self, mass, hbar, L, points=1001):
         self.mass = mass
         self.hbar = hbar
         self.points = points
@@ -31,8 +32,11 @@ class QuantumSystem:
         limits = [(ymax1 * 1.5), (ymax2 * 1.5)]
         return limits
 
+    def integral(self, n):
+        return simpson(self.prob_density(n), self.x, self.points)
+
 class ParticleInBox(QuantumSystem):
-    def __init__(self, mass, hbar, L, points=1000):
+    def __init__(self, mass, hbar, L, points=1001):
         super().__init__(mass, hbar, L, points)
         self.x = np.linspace(0, self.L, points)
         self.lower = 0
@@ -53,7 +57,7 @@ class ParticleInBox(QuantumSystem):
         return limits
 
 class ParticleInFreeSpace(QuantumSystem):
-    def __init__(self, mass, hbar, L, points=1000):
+    def __init__(self, mass, hbar, L, points=1001):
         super().__init__(mass, hbar, L, points)
         self.x = np.linspace(-self.L, self.L, points)
         self.lower = -self.L
@@ -74,7 +78,7 @@ class ParticleInFreeSpace(QuantumSystem):
         return limits
 
 class HarmonicOscillator(QuantumSystem):
-    def __init__(self, mass, hbar, L,  points=1000, omega=1e15):
+    def __init__(self, mass, hbar, L,  points=1001, omega=1e15):
         super().__init__(mass, hbar, L, points)
         self.x = np.linspace(-self.L, self.L, points)
         self.omega = omega

@@ -91,6 +91,7 @@ def plot_graph(quantum_system):
         n = slider.val
         energy = quantum_system.energy(n)/electron_volt
         nodes = quantum_system.nodes(n)
+        integral = quantum_system.integral(n)
 
         if np.iscomplexobj(quantum_system.psi(n)):
             line1_real.set_ydata(quantum_system.psi(n).real)
@@ -103,12 +104,12 @@ def plot_graph(quantum_system):
         if system_type == ParticleInFreeSpace:
             axis1.set_title(f"Wavefunction, k = {n}")
             axis2.set_title(f"Probability Density Function, k = {n}")
-            text.set_text(f"k = {n}   |   E = {energy:.3E} eV   |   Nodes = {nodes}")
+            text.set_text(f"k = {n}   |   E = {energy:.3E} eV   |   Nodes = {nodes} | Probability Integral = {integral:.3E}")
 
         else:
             axis1.set_title(f"Wavefunction, n = {n}")
             axis2.set_title(f"Probability Density Function, n = {n}")
-            text.set_text(f"n = {n}   |   E = {energy:.3E} eV   |   Nodes = {nodes}")
+            text.set_text(f"n = {n}   |   E = {energy:.3E} eV   |   Nodes = {nodes} | Probability Integral = {integral:.3E}")
 
         fig.canvas.draw_idle()
 
